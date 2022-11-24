@@ -13,6 +13,10 @@
     case visible
     /// Indicates that the keyboard is currently hidden
     case hidden
+    /// Indicates that the keyboard is going to be hidden
+    case hiding
+    /// Indicates that the keyboard is going to be shown
+    case showing
 }
 
 #endif

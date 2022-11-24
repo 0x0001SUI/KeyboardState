@@ -18,6 +18,8 @@ import Combine
         //
         // - UIResponder.keyboardDidShowNotification
         // - UIResponder.keyboardDidHideNotification
+        // - UIResponder.keyboardWillHideNotification
+        // - UIResponder.keyboardWillShowNotification
 
         NotificationCenter.default
             .publisher(for: UIResponder.keyboardDidShowNotification)
@@ -32,6 +34,22 @@ import Combine
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.state = .hidden
+            }
+            .store(in: &cancellable)
+        
+        NotificationCenter.default
+            .publisher(for: UIResponder.keyboardWillHideNotification)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.state = .hiding
+            }
+            .store(in: &cancellable)
+        
+        NotificationCenter.default
+            .publisher(for: UIResponder.keyboardWillShowNotification)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.state = .showing
             }
             .store(in: &cancellable)
     }
